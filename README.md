@@ -2,6 +2,10 @@
 
 Working with composable, component, vueUse, NuxtLink, dynamicRoute, store, clientOnly
 
+# web-site link
+
+https://profound-mooncake-f8d4a0.netlify.app/course/chapter/1-chapter-1/lesson/1-introduction-to-typescript-with-vue-js-3
+
 # Nuxt 3 Minimal Starter
 
 Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
