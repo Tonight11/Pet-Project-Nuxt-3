@@ -1,5 +1,11 @@
 <script setup></script>
 
-<template>this is a home page</template>
+<template>
+	<h1>
+		<span class="font-medium">
+			<span class="font-bold">this is a home page</span>
+		</span>
+	</h1>
+</template>
 
 <style lang="scss" scoped></style>

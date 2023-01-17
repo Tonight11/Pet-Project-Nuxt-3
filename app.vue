@@ -1,7 +1,6 @@
 <template>
-	<div class="wrapper bg-gray-100">
+	<div>
 		<NuxtLayout>
-			<TheHeader />
 			<NuxtPage />
 		</NuxtLayout>
 	</div>
@@ -10,9 +9,5 @@
 <style>
 	li {
 		list-style: none;
-	}
-
-	.wrapper {
-		min-height: 100vh;
 	}
 </style>
