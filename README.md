@@ -1,6 +1,8 @@
+<img src="https://miro.medium.com/max/1000/1*qJppTMduXXhjgU2tZt9SfQ.png" alt="nuxt3" width="400" style="display: block; margin: 0 auto;" />
+
 # First serious nuxt 3 project
 
-Working with composable, component, vueUse, NuxtLink, dynamicRoute, store, clientOnly
+Working with composable, component, layout, vueUse, NuxtLink, dynamicRoute, store, clientOnly and error page
 
 # web-site link
 
