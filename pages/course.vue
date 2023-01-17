@@ -21,7 +21,7 @@
 				class="prose mr-4 p-8 bg-white rounded-md min-w-[20ch] max-w-[30ch] flex flex-col"
 			>
 				<h3 class="mb-2">Chapters</h3>
-				<li v-for="chapter in course.linkPath">
+				<li v-for="chapter in course.data">
 					<span class="font-bold">{{ chapter.title }}</span>
 					<template v-if="chapter.lessons">
 						<li v-for="lesson in chapter.lessons">

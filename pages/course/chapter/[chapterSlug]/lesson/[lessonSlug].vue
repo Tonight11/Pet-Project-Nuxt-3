@@ -40,7 +40,7 @@
 	<p class="mb-2 uppercase font-bold text-state-400">
 		lesson {{ course.chapter.value.number }} - {{ course.lesson.value.number }}
 	</p>
-	<h2 class="m-0 mb-1">{{ course.courseData.title }}</h2>
+	<h2 class="m-0 mb-1">{{ course.title.value }}</h2>
 	<div class="flex flex-col">
 		<NuxtLink
 			:to="course.lesson.value.sourceUrl"
@@ -53,7 +53,6 @@
 			>Donwload Video</NuxtLink
 		>
 	</div>
-
 	<VideoPlayer
 		v-if="course.lesson.value.videoId"
 		:video-id="course.lesson.value.videoId"
