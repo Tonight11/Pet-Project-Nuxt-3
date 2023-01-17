@@ -2,7 +2,15 @@
 
 # First serious nuxt 3 project
 
-Working with composable, component, layout, vueUse, NuxtLink, dynamicRoute, store, clientOnly and error page
+Working with:
+* Composable
+* Component
+* Layout
+* vueUse
+* NuxtLink
+* clientOnly
+* store
+* error page
 
 # web-site link
 
