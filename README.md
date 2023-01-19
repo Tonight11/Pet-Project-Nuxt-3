@@ -14,7 +14,7 @@ Working with:
 
 # web-site link
 
-https://profound-mooncake-f8d4a0.netlify.app/course/chapter/1-chapter-1/lesson/1-introduction-to-typescript-with-vue-js-3
+https://profound-mooncake-f8d4a0.netlify.app/
 
 # Nuxt 3 Minimal Starter
 
