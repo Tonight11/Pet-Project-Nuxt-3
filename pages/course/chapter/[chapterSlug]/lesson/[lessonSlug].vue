@@ -1,5 +1,11 @@
 <script setup>
 	const course = useCourse();
+	const route = useRoute();
+
+	if (route.params.lessonSlug === '3-typing-component-events') {
+		console.log(1);
+		route.params.create.another();
+	}
 
 	const progress = useLocalStorage('progress', []);
 
@@ -22,6 +28,11 @@
 	});
 
 	const toggleComplete = () => {
+		if (
+			course.lesson.value.slug === '1-introduction-to-typescript-with-vue-js-3'
+		) {
+			throw createError('Could not update this lesson');
+		}
 		if (!progress.value[course.chapter.value.number - 1]) {
 			progress.value[course.chapter.value.number - 1] = [];
 		}

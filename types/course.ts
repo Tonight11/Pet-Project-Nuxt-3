@@ -6,6 +6,7 @@ export interface Lesson {
 	sourceUrl?: string;
 	videoId: number;
 	text: string;
+	path?: string
 }
 
 export interface Chapter {
