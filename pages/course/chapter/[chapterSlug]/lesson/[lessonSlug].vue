@@ -1,26 +1,32 @@
 <script setup>
 	const course = useCourse();
-	const route = useRoute();
 
-	if (route.params.lessonSlug === '3-typing-component-events') {
-		throw createError('couldnt load the lesson');
-	}
+	definePageMeta({
+		// valiidate if page is exist
+		validate() {
+			const course = useCourse();
+
+			if (!course.chapter.value) {
+				throw createError({
+					statusCode: 404,
+					message: 'Chapter not found',
+				});
+			}
+
+			if (!course.lesson.value) {
+				throw createError({
+					statusCode: 404,
+					message: 'Lesson not found',
+				});
+			}
+
+			return true;
+		},
+	});
+
+	// marking lesson as completed
 
 	const progress = useLocalStorage('progress', []);
-
-	if (course.chapter.value === undefined) {
-		throw createError({
-			statusCode: 404,
-			message: 'Chapter not found',
-		});
-	}
-
-	if (course.lesson.value === undefined) {
-		throw createError({
-			statusCode: 404,
-			message: 'Lesson not found',
-		});
-	}
 
 	const isLessonCompleted = computed(() => {
 		if (!progress.value[course.chapter.value?.number - 1]) {
@@ -54,6 +60,8 @@
 			course.lesson.value?.number - 1
 		] = !isLessonCompleted.value;
 	};
+
+	// meta for seo
 
 	useHead({
 		title: `${course.chapter.value?.slug} - ${course.lesson.value?.slug}`,
