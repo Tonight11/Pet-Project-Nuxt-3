@@ -3,47 +3,60 @@
 	const route = useRoute();
 
 	if (route.params.lessonSlug === '3-typing-component-events') {
-		console.log(1);
-		route.params.create.another();
+		throw createError('couldnt load the lesson');
 	}
 
 	const progress = useLocalStorage('progress', []);
 
+	if (course.chapter.value === undefined) {
+		throw createError({
+			statusCode: 404,
+			message: 'Chapter not found',
+		});
+	}
+
+	if (course.lesson.value === undefined) {
+		throw createError({
+			statusCode: 404,
+			message: 'Lesson not found',
+		});
+	}
+
 	const isLessonCompleted = computed(() => {
-		if (!progress.value[course.chapter.value.number - 1]) {
+		if (!progress.value[course.chapter.value?.number - 1]) {
 			return false;
 		}
 
 		if (
-			!progress.value[course.chapter.value.number - 1][
-				course.lesson.value.number - 1
+			!progress.value[course.chapter.value?.number - 1][
+				course.lesson.value?.number - 1
 			]
 		) {
 			return false;
 		}
 
-		return progress.value[course.chapter.value.number - 1][
-			course.lesson.value.number - 1
+		return progress.value[course.chapter.value?.number - 1][
+			course.lesson.value?.number - 1
 		];
 	});
 
 	const toggleComplete = () => {
 		if (
-			course.lesson.value.slug === '1-introduction-to-typescript-with-vue-js-3'
+			course.lesson.value?.slug === '1-introduction-to-typescript-with-vue-js-3'
 		) {
 			throw createError('Could not update this lesson');
 		}
-		if (!progress.value[course.chapter.value.number - 1]) {
-			progress.value[course.chapter.value.number - 1] = [];
+		if (!progress.value[course.chapter.value?.number - 1]) {
+			progress.value[course.chapter.value?.number - 1] = [];
 		}
 
-		progress.value[course.chapter.value.number - 1][
-			course.lesson.value.number - 1
+		progress.value[course.chapter.value?.number - 1][
+			course.lesson.value?.number - 1
 		] = !isLessonCompleted.value;
 	};
 
 	useHead({
-		title: `${course.chapter.value.slug} - ${course.lesson.value.slug}`,
+		title: `${course.chapter.value?.slug} - ${course.lesson.value?.slug}`,
 	});
 </script>
 
