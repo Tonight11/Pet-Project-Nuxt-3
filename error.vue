@@ -6,6 +6,10 @@
 			redirect: '/',
 		});
 	};
+
+	useHead({
+		title: '404',
+	});
 </script>
 
 <template>
