@@ -11,7 +11,7 @@
 </script>
 
 <template>
-	<TheHeader />
+	
 	<h1>
 		<span class="font-medium">
 			<span class="font-bold">this is a home page</span>

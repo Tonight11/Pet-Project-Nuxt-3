@@ -3,17 +3,26 @@
 
 	definePageMeta({
 		// valiidate if page is exist
-		validate() {
+		validate({ params }) {
 			const course = useCourse();
 
-			if (!course.chapter.value) {
+			const chapter = computed(() => {
+				return course.data.find(item => item.slug === params.chapterSlug);
+			});
+			if (!chapter.value) {
 				throw createError({
 					statusCode: 404,
 					message: 'Chapter not found',
 				});
 			}
 
-			if (!course.lesson.value) {
+			const lesson = computed(() => {
+				return chapter.value?.lessons.find(
+					item => item.slug === params.lessonSlug
+				);
+			});
+
+			if (!lesson.value) {
 				throw createError({
 					statusCode: 404,
 					message: 'Lesson not found',
