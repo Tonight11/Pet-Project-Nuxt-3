@@ -1,0 +1,46 @@
+<script setup>
+	const { title } = useCourse();
+	definePageMeta({
+		layout: false,
+	});
+</script>
+
+<template>
+	<NuxtLink to="/">Homepage</NuxtLink>
+	<div class="signup">
+		<div class="signup-connect">
+			<h1>Sign in to {{ title }}</h1>
+			<div class="signup-connect__btns">
+				<button class="btn btn-social btn-facebook">Sign in with GitHub</button>
+				<button class="btn btn-social btn-google">sign in with Google</button>
+			</div>
+		</div>
+	</div>
+</template>
+
+<style lang="scss" scoped>
+	.signup {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+		overflow: hidden;
+		display: flex;
+	}
+
+	.signup-connect {
+		color: #bfc0c0;
+
+		&__btns {
+			display: flex;
+			flex-direction: column;
+		}
+		h1 {
+			font-size: 30px;
+			margin-top: 10px;
+			margin-bottom: 40px;
+			text-shadow: 0 2px 3px #0000001a;
+		}
+	}
+</style>
