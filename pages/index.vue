@@ -1,4 +1,6 @@
 <script setup>
+	const { title } = useCourse();
+
 	useHead({
 		title: 'Home Page',
 		meta: [
@@ -12,11 +14,6 @@
 
 <template>
 	
-	<h1>
-		<span class="font-medium">
-			<span class="font-bold">this is a home page</span>
-		</span>
-	</h1>
 </template>
 
 <style lang="scss" scoped></style>

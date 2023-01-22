@@ -214,19 +214,5 @@
 		justify-content: center;
 	}
 
-	.btn {
-		background: $white;
-		padding: 15px 20px;
-		margin: 5px;
-		color: $dark;
-		font-family: $body;
-		text-transform: uppercase;
-		font-size: 0.6em;
-		letter-spacing: 1px;
-		border: 0;
-		&:hover {
-			background: $gray;
-			transition: all 0.4s ease-out;
-		}
-	}
+	
 </style>
