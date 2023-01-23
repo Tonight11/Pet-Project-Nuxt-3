@@ -1,6 +1,10 @@
 <script setup>
 	const course = useCourse();
 
+	definePageMeta({
+		middleware: ['auth'],
+	});
+
 	const resetErr = async error => {
 		await navigateTo('/course');
 		error.value = null;
