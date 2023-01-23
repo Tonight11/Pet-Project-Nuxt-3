@@ -1,6 +1,6 @@
 <img src="https://miro.medium.com/max/1000/1*qJppTMduXXhjgU2tZt9SfQ.png" alt="nuxt3" width="400" style="display: block; margin: 0 auto;" />
 
-# First serious nuxt 3 project
+# First serious nuxt 3 & TS project
 
 Working with:
 * Composable
@@ -11,6 +11,8 @@ Working with:
 * clientOnly
 * store
 * error page
+* route middleware
+* login&oAuth&supabase
 
 # web-site link
 
