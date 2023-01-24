@@ -1,5 +1,20 @@
-<script setup>
+<script setup lang="ts">
 	const { title } = useCourse();
+	const user = useSupabaseUser();
+	const supabase = useSupabaseClient();
+
+	const signIn = (provider: 'github') => {
+		supabase.auth.signInWithOAuth({
+			provider: provider,
+		});
+	};
+
+	watchEffect(() => {
+		if (user.value) {
+			navigateTo('/course');
+		}
+	});
+
 	definePageMeta({
 		layout: false,
 	});
@@ -11,8 +26,10 @@
 		<div class="signup-connect">
 			<h1>Sign in to {{ title }}</h1>
 			<div class="signup-connect__btns">
-				<button class="btn btn-social btn-facebook">Sign in with GitHub</button>
-				<button class="btn btn-social btn-google">sign in with Google</button>
+				<button class="btn btn-social btn-facebook" @click="signIn('github')">
+					Sign in with GitHub
+				</button>
+				<button class="btn btn-social btn-google">sign in with Google(not working)</button>
 			</div>
 		</div>
 	</div>

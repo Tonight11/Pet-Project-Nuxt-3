@@ -1,6 +1,7 @@
 // valiidate if user is authorized
 export default defineNuxtRouteMiddleware((to, from) => {
-	if (to.path === '/course' || to.params.chapterSlug) {
+	const user = useSupabaseUser();
+	if ((to.path === '/course' || to.params.chapterSlug) && !user.value) {
 		return navigateTo('/login');
 	}
 });
