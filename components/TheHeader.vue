@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <nav class="navigation">
+  <nav class="navigation w-full">
 		<NuxtLink to="/" >Home</NuxtLink>
 		<NuxtLink to="/course" >Course</NuxtLink>
 	</nav>
