@@ -1,12 +1,16 @@
 <script setup lang="ts">
 	const { title } = useCourse();
 	const user = useSupabaseUser();
-	const supabase = useSupabaseClient();
+	const supabase = useSupabaseAuthClient();
 
-	const signIn = (provider: 'github') => {
-		supabase.auth.signInWithOAuth({
+	const signIn = async (provider: 'github') => {
+		const { error } = await supabase.auth.signInWithOAuth({
 			provider: provider,
 		});
+
+		if (error) {
+			console.log(error);
+		}
 	};
 
 	watchEffect(() => {
@@ -21,15 +25,19 @@
 </script>
 
 <template>
-	<NuxtLink to="/">Homepage</NuxtLink>
-	<div class="signup">
-		<div class="signup-connect">
-			<h1>Sign in to {{ title }}</h1>
-			<div class="signup-connect__btns">
-				<button class="btn btn-social btn-facebook" @click="signIn('github')">
-					Sign in with GitHub
-				</button>
-				<button class="btn btn-social btn-google">sign in with Google(not working)</button>
+	<div>
+		<NuxtLink to="/">Homepage</NuxtLink>
+		<div class="signup">
+			<div class="signup-connect">
+				<h1>Sign in to {{ title }}</h1>
+				<div class="signup-connect__btns">
+					<button class="btn btn-social btn-facebook" @click="signIn('github')">
+						Sign in with GitHub
+					</button>
+					<button class="btn btn-social btn-google">
+						sign in with Google(not working)
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

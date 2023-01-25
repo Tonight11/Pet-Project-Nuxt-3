@@ -13,29 +13,31 @@
 </script>
 
 <template>
-	<div id="background"></div>
-	<div class="top">
-		<h1 v-if="error.statusCode">{{ error.statusCode }}</h1>
-		<h3 v-if="error.message">{{ error.message }}</h3>
-	</div>
-	<div class="container">
-		<div class="ghost-copy">
-			<div class="one"></div>
-			<div class="two"></div>
-			<div class="three"></div>
-			<div class="four"></div>
+	<div>
+		<div id="background"></div>
+		<div class="top">
+			<h1 v-if="error.statusCode">{{ error.statusCode }}</h1>
+			<h3 v-if="error.message">{{ error.message }}</h3>
 		</div>
-		<div class="ghost">
-			<div class="face">
-				<div class="eye"></div>
-				<div class="eye-right"></div>
-				<div class="mouth"></div>
+		<div class="container">
+			<div class="ghost-copy">
+				<div class="one"></div>
+				<div class="two"></div>
+				<div class="three"></div>
+				<div class="four"></div>
 			</div>
+			<div class="ghost">
+				<div class="face">
+					<div class="eye"></div>
+					<div class="eye-right"></div>
+					<div class="mouth"></div>
+				</div>
+			</div>
+			<div class="shadow"></div>
 		</div>
-		<div class="shadow"></div>
-	</div>
-	<div class="bottom">
-		<button @click="clearErr" class="btn">Go Back Homepage</button>
+		<div class="bottom">
+			<button @click="clearErr" class="btn">Go Back Homepage</button>
+		</div>
 	</div>
 </template>
 
@@ -213,6 +215,4 @@
 		display: flex;
 		justify-content: center;
 	}
-
-	
 </style>

@@ -13,7 +13,9 @@
 </script>
 
 <template>
-	
+	<div class="main">
+		<h2>main page</h2>
+	</div>
 </template>
 
 <style lang="scss" scoped></style>
