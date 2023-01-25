@@ -1,6 +1,5 @@
 <script setup>
 	const { title } = useCourse();
-	const user = useSupabaseUser();
 </script>
 
 <template>
@@ -14,7 +13,6 @@
 					<span class="font-bold">{{ title }}</span>
 				</span>
 			</h1>
-			<UserCard v-if="user" />
 		</div>
 		<slot />
 	</div>

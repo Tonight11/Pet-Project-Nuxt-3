@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	const user = useSupabaseUser();
+	const client = useSupabaseAuthClient();
 
 	const avatar = computed<string>(() => {
 		return user.value?.user_metadata.avatar_url;
@@ -8,16 +9,26 @@
 	const name = computed<string>(() => {
 		return user.value?.user_metadata.full_name;
 	});
+
+	const logOut = async () => {
+		const { error } = await client.auth.signOut();
+
+		if (error) {
+			console.log(error);
+		} else {
+			return navigateTo('/login');
+		}
+	};
 </script>
 
 <template>
-	<div class="user-card">
+	<div class="user-card" v-if="user">
 		<div class="user-card__img">
 			<img :src="avatar" alt="avatar" />
 		</div>
 		<div class="user-card__info">
 			<h4 class="user-card__name">{{ name }}</h4>
-			<button class="user-card__log-out">log out</button>
+			<button class="user-card__log-out" @click="logOut">log out</button>
 		</div>
 	</div>
 </template>
