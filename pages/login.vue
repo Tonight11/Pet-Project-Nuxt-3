@@ -18,7 +18,9 @@
 
 	watchEffect(() => {
 		if (user.value) {
-			navigateTo(query.redirectTo as string);
+			navigateTo(query.redirectTo as string, {
+				replace: true,
+			});
 		}
 	});
 
