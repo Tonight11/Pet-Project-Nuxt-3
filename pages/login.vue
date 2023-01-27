@@ -6,17 +6,19 @@
 
 	const signIn = async (provider: 'github') => {
 		const redirectTo = `${window.location.origin}${query.redirectTo}`;
-		const { error } = await supabase.auth.signInWithOAuth({
-			provider: provider,
-			options: { redirectTo },
-		});
+		console.log(redirectTo);
+		// const { error } = await supabase.auth.signInWithOAuth({
+		// 	provider: provider,
+		// 	options: { redirectTo },
+		// });
 
-		if (error) {
-			console.log(error);
-		}
+		// if (error) {
+		// 	console.log(error);
+		// }
 	};
 
 	watchEffect(() => {
+		console.log(query.redirectTo);
 		if (user.value) {
 			navigateTo(query.redirectTo as string, {
 				replace: true,
