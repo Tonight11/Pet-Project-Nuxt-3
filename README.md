@@ -16,7 +16,7 @@ Working with:
 
 # web-site link
 
-https://profound-mooncake-f8d4a0.netlify.app/
+https://nuxt-ts.netlify.app
 
 # Nuxt 3 Minimal Starter
 
