@@ -4,23 +4,21 @@
 	const supabase = useSupabaseAuthClient();
 	const { query } = useRoute();
 
+	const redirectTo: string = `${window.location.origin}${query.redirectTo}`;
 	const signIn = async (provider: 'github') => {
-		const redirectTo = `${window.location.origin}${query.redirectTo}`;
-		console.log(redirectTo);
-		// const { error } = await supabase.auth.signInWithOAuth({
-		// 	provider: provider,
-		// 	options: { redirectTo },
-		// });
+		const { error } = await supabase.auth.signInWithOAuth({
+			provider: provider,
+			options: { redirectTo },
+		});
 
-		// if (error) {
-		// 	console.log(error);
-		// }
+		if (error) {
+			console.log(error);
+		}
 	};
 
 	watchEffect(() => {
-		console.log(query.redirectTo);
 		if (user.value) {
-			navigateTo(query.redirectTo as string, {
+			navigateTo(redirectTo, {
 				replace: true,
 			});
 		}
