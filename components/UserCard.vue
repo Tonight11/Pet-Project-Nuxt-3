@@ -11,13 +11,24 @@
 	});
 
 	const logOut = async () => {
+		const { path } = useRoute();
 		const { error } = await client.auth.signOut();
 
 		if (error) {
 			console.log(error);
-		} else {
-			return navigateTo('/login');
+			return;
 		}
+
+		try {
+			await $fetch('/api/_supabase/session', {
+				method: 'POST',
+				body: { event: 'SIGNED_OUT', session: null },
+			});
+			user.value = null;
+		} catch (e) {
+			console.error(error);
+		}
+		await navigateTo(`/login?redirectTo=${path}`);
 	};
 </script>
 
