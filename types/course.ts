@@ -6,7 +6,10 @@ export interface Lesson {
 	sourceUrl?: string;
 	videoId: number;
 	text: string;
-	path?: string
+}
+
+export interface LessonWithPath extends Lesson {
+	path: string;
 }
 
 export interface Chapter {
@@ -14,4 +17,9 @@ export interface Chapter {
 	slug: string;
 	number: number;
 	lessons: Lesson[];
+}
+
+export interface Course {
+	title: string;
+	chapters: Chapter[];
 }
