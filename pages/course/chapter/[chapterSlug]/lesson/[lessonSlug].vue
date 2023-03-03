@@ -1,5 +1,13 @@
 <script setup>
 	const course = useCourse();
+	const route = useRoute();
+
+	const lesson = await useLesson(
+		route.params.chapterSlug,
+		route.params.lessonSlug
+	);
+
+	console.log(lesson.value);
 
 	definePageMeta({
 		middleware: [
@@ -49,36 +57,33 @@
 
 		if (
 			!progress.value[course.chapter.value?.number - 1][
-				course.lesson.value?.number - 1
+				lesson.value?.number - 1
 			]
 		) {
 			return false;
 		}
 
 		return progress.value[course.chapter.value?.number - 1][
-			course.lesson.value?.number - 1
+			lesson.value?.number - 1
 		];
 	});
 
 	const toggleComplete = () => {
-		if (
-			course.lesson.value?.slug === '1-introduction-to-typescript-with-vue-js-3'
-		) {
+		if (lesson.value?.slug === '1-introduction-to-typescript-with-vue-js-3') {
 			throw createError('Could not update this lesson');
 		}
 		if (!progress.value[course.chapter.value?.number - 1]) {
 			progress.value[course.chapter.value?.number - 1] = [];
 		}
 
-		progress.value[course.chapter.value?.number - 1][
-			course.lesson.value?.number - 1
-		] = !isLessonCompleted.value;
+		progress.value[course.chapter.value?.number - 1][lesson.value?.number - 1] =
+			!isLessonCompleted.value;
 	};
 
 	// meta for seo
 
 	useHead({
-		title: `${course.chapter.value?.slug} - ${course.lesson.value?.slug}`,
+		title: `${course.chapter.value?.slug} - ${lesson.value?.slug}`,
 	});
 </script>
 
@@ -86,26 +91,17 @@
 	<div>
 		<p class="mb-2 uppercase font-bold text-state-400">
 			lesson {{ course.chapter.value.number }} -
-			{{ course.lesson.value.number }}
+			{{ lesson.number }}
 		</p>
 		<h2 class="m-0 mb-1">{{ course.title.value }}</h2>
 		<div class="flex flex-col">
-			<NuxtLink
-				:to="course.lesson.value.sourceUrl"
-				v-if="course.lesson.value.sourceUrl"
-				>Video</NuxtLink
-			>
-			<NuxtLink
-				:to="course.lesson.value.downloadUrl"
-				v-if="course.lesson.value.downloadUrl"
+			<NuxtLink :to="lesson.sourceUrl" v-if="lesson.sourceUrl">Video</NuxtLink>
+			<NuxtLink :to="lesson.downloadUrl" v-if="lesson.downloadUrl"
 				>Donwload Video</NuxtLink
 			>
 		</div>
-		<VideoPlayer
-			v-if="course.lesson.value.videoId"
-			:video-id="course.lesson.value.videoId"
-		/>
-		<p class="m-0 mb-2">{{ course.lesson.value.text }}</p>
+		<VideoPlayer v-if="lesson.videoId" :video-id="lesson.videoId" />
+		<p class="m-0 mb-2">{{ lesson.text }}</p>
 		<ListCompleteButton
 			:model-value="isLessonCompleted"
 			@update:model-value="toggleComplete"
