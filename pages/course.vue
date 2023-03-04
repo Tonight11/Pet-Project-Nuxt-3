@@ -1,5 +1,5 @@
 <script setup>
-	const course = useCourse();
+	const course = await useCourse();
 
 	definePageMeta({
 		middleware: ['auth'],

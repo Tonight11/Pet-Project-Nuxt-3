@@ -16,7 +16,7 @@ export interface Chapter {
 	title: string;
 	slug: string;
 	number: number;
-	lessons: Lesson[];
+	lessons: Lesson[] | LessonWithPath[];
 }
 
 export interface Course {

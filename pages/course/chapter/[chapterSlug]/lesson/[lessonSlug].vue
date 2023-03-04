@@ -1,5 +1,5 @@
 <script setup>
-	const course = useCourse();
+	const course = await useCourse();
 	const route = useRoute();
 
 	const lesson = await useLesson(
@@ -7,13 +7,11 @@
 		route.params.lessonSlug
 	);
 
-	console.log(lesson.value);
-
 	definePageMeta({
 		middleware: [
 			// valiidate if page is exist
-			function ({ params }, from) {
-				const course = useCourse();
+			async function ({ params }, from) {
+				const course = await useCourse();
 
 				const chapter = computed(() => {
 					return course.data.find(item => item.slug === params.chapterSlug);

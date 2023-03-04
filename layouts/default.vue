@@ -1,6 +1,4 @@
-<script setup>
-	const { title } = useCourse();
-</script>
+<script setup></script>
 
 <template>
 	<div
@@ -10,7 +8,7 @@
 		<div class="w-full mb-12 flex justify-between">
 			<h1>
 				<span class="font-medium">
-					<span class="font-bold">{{ title }}</span>
+					<span class="font-bold">Nuxt 3 course</span>
 				</span>
 			</h1>
 		</div>

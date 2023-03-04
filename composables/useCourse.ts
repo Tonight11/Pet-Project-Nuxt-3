@@ -1,16 +1,17 @@
-import courseData from './courseData';
 import { Lesson, Chapter, Course, LessonWithPath } from '~~/types/course';
+import useFetchWithCache from './useFetchWithCache';
 
-courseData as Course;
-export const useCourse = () => {
+export const useCourse = async () => {
+	const url = `/api/meta`;
+	const course = await useFetchWithCache<Course>(url);
 	const route = useRoute();
 
 	const title = computed<string>(() => {
-		return courseData.title;
+		return course.value.title;
 	});
 
 	const chapter = computed<Chapter | undefined>(() => {
-		return courseData.chapters.find(
+		return course.value.chapters.find(
 			item => item.slug === route.params.chapterSlug
 		);
 	});
@@ -21,7 +22,7 @@ export const useCourse = () => {
 		);
 	});
 
-	const data: Chapter[] = courseData.chapters.map((chapterItem: Chapter) => {
+	const data: Chapter[] = course.value.chapters.map((chapterItem: Chapter) => {
 		const lessons: LessonWithPath[] = chapterItem.lessons.map(
 			(lessonItem: Lesson) => {
 				return {

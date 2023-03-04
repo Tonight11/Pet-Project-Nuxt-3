@@ -1,6 +1,4 @@
 <script setup>
-	const { title } = useCourse();
-
 	useHead({
 		title: 'Home Page',
 		meta: [
