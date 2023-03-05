@@ -6,7 +6,6 @@
 		route.params.chapterSlug,
 		route.params.lessonSlug
 	);
-
 	definePageMeta({
 		middleware: [
 			// valiidate if page is exist
@@ -14,7 +13,9 @@
 				const course = await useCourse();
 
 				const chapter = computed(() => {
-					return course.data.find(item => item.slug === params.chapterSlug);
+					return course.meta.value.chapters.find(
+						item => item.slug === params.chapterSlug
+					);
 				});
 				if (!chapter.value) {
 					return abortNavigation(
@@ -49,19 +50,17 @@
 	const progress = useLocalStorage('progress', []);
 
 	const isLessonCompleted = computed(() => {
-		if (!progress.value[course.chapter.value?.number - 1]) {
+		if (!progress.value[course.chapter.value.number - 1]) {
 			return false;
 		}
 
 		if (
-			!progress.value[course.chapter.value?.number - 1][
-				lesson.value?.number - 1
-			]
+			!progress.value[course.chapter.value.number - 1][lesson.value?.number - 1]
 		) {
 			return false;
 		}
 
-		return progress.value[course.chapter.value?.number - 1][
+		return progress.value[course.chapter.value.number - 1][
 			lesson.value?.number - 1
 		];
 	});
@@ -70,11 +69,10 @@
 		if (lesson.value?.slug === '1-introduction-to-typescript-with-vue-js-3') {
 			throw createError('Could not update this lesson');
 		}
-		if (!progress.value[course.chapter.value?.number - 1]) {
-			progress.value[course.chapter.value?.number - 1] = [];
+		if (!progress.value[course.chapter.value.number - 1]) {
+			progress.value[course.chapter.value.number - 1] = [];
 		}
-
-		progress.value[course.chapter.value?.number - 1][lesson.value?.number - 1] =
+		progress.value[course.chapter.value.number - 1][lesson.value?.number - 1] =
 			!isLessonCompleted.value;
 	};
 
@@ -91,7 +89,7 @@
 			lesson {{ course.chapter.value.number }} -
 			{{ lesson.number }}
 		</p>
-		<h2 class="m-0 mb-1">{{ course.title.value }}</h2>
+		<h2 class="m-0 mb-1">{{ course.meta.value?.title }}</h2>
 		<div class="flex flex-col">
 			<NuxtLink :to="lesson.sourceUrl" v-if="lesson.sourceUrl">Video</NuxtLink>
 			<NuxtLink :to="lesson.downloadUrl" v-if="lesson.downloadUrl"

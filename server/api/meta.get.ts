@@ -1,24 +1,6 @@
 import { Course, Chapter } from '~~/types/course';
+import { mainMeta, neededChapter, neededLessons } from '~~/types/course';
 import course from '../courseData';
-
-interface baseNeeded {
-	title: string;
-	slug: string;
-	number: number;
-}
-
-interface neededChapter extends baseNeeded {
-	lessons: neededLessons[];
-}
-
-interface neededLessons extends baseNeeded {
-	path: string;
-}
-
-interface mainMeta {
-	title: string;
-	chapters: neededChapter[];
-}
 
 course as Course;
 

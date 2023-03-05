@@ -34,7 +34,7 @@
 		<NuxtLink to="/">Homepage</NuxtLink>
 		<div class="signup">
 			<div class="signup-connect">
-				<h1>Sign in to {{ course.title.value }}</h1>
+				<h1>Sign in to {{ course.meta.value?.title }}</h1>
 				<div class="signup-connect__btns">
 					<button class="btn btn-social btn-facebook" @click="signIn('github')">
 						Sign in with GitHub

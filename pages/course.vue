@@ -1,5 +1,6 @@
 <script setup>
 	const course = await useCourse();
+	const { params } = useRoute();
 
 	definePageMeta({
 		middleware: ['auth'],
@@ -23,7 +24,7 @@
 				class="prose mr-4 p-8 bg-white rounded-md min-w-[20ch] max-w-[30ch] flex flex-col"
 			>
 				<h3 class="mb-2">Chapters</h3>
-				<li v-for="chapter in course.data">
+				<li v-for="chapter in course.meta.value?.chapters">
 					<span class="font-bold">{{ chapter.title }}</span>
 					<template v-if="chapter.lessons">
 						<li v-for="lesson in chapter.lessons">
@@ -42,7 +43,7 @@
 			</div>
 
 			<div class="prose p-12 bg-white rounded-md w-[65ch]">
-				<div class="select" v-if="!course.lesson.value">Select Lesson</div>
+				<div class="select" v-if="!params.lessonSlug">Select Lesson</div>
 				<NuxtErrorBoundary>
 					<NuxtPage />
 					<template #error="{ error }">
