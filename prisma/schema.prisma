@@ -10,7 +10,7 @@ generator client {
 model Course {
   id        Int       @id @default(autoincrement())
   title     String
-  chapter   Chapter[]
+  chapters  Chapter[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -20,7 +20,7 @@ model Chapter {
   title     String
   slug      String
   number    Int
-  lesson    Lesson[]
+  lessons   Lesson[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Course    Course   @relation(fields: [courseId], references: [id])
