@@ -1,19 +1,26 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev -o",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "devDependencies": {
-    "@nuxtjs/supabase": "^0.3.0",
-    "@nuxtjs/tailwindcss": "^6.2.0",
-    "@vueuse/core": "^9.10.0",
-    "@vueuse/nuxt": "^9.10.0",
-    "nuxt": "3.0.0",
-    "sass": "^1.57.1",
-    "sass-loader": "^13.2.0"
-  }
+	"private": true,
+	"prisma": {
+		"seed": "node prisma/seed.mjs"
+	},
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev -o",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
+	},
+	"devDependencies": {
+		"@nuxtjs/supabase": "^0.3.0",
+		"@nuxtjs/tailwindcss": "^6.2.0",
+		"@vueuse/core": "^9.10.0",
+		"@vueuse/nuxt": "^9.10.0",
+		"nuxt": "3.0.0",
+		"sass": "^1.57.1",
+		"sass-loader": "^13.2.0"
+	},
+	"dependencies": {
+		"@prisma/client": "^4.11.0",
+		"prisma": "^4.11.0"
+	}
 }
