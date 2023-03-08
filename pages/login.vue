@@ -1,28 +1,28 @@
 <script setup lang="ts">
 	const course = await useCourse();
-	const user = useSupabaseUser();
-	const supabase = useSupabaseAuthClient();
 	const { query } = useRoute();
+	const supabase = useSupabaseClient();
+	const user = useSupabaseUser();
+	onMounted(() => {
+		watchEffect(async () => {
+			if (user.value) {
+				await navigateTo(query.redirectTo as string, {
+					replace: true,
+				});
+			}
+		});
+	});
 
-	const signIn = async (provider: 'github') => {
+	const login = async (provider: 'github') => {
 		const redirectTo: string = `${window.location.origin}${query.redirectTo}`;
 		const { error } = await supabase.auth.signInWithOAuth({
-			provider: provider,
+			provider,
 			options: { redirectTo },
 		});
-
 		if (error) {
-			console.log(error);
+			console.error(error);
 		}
 	};
-
-	watchEffect(async () => {
-		if (user.value) {
-			await navigateTo(query.redirectTo as string, {
-				replace: true,
-			});
-		}
-	});
 
 	definePageMeta({
 		layout: false,
@@ -36,7 +36,7 @@
 			<div class="signup-connect">
 				<h1>Sign in to {{ course.meta.value?.title }}</h1>
 				<div class="signup-connect__btns">
-					<button class="btn btn-social btn-facebook" @click="signIn('github')">
+					<button class="btn btn-social btn-facebook" @click="login('github')">
 						Sign in with GitHub
 					</button>
 					<button class="btn btn-social btn-google">

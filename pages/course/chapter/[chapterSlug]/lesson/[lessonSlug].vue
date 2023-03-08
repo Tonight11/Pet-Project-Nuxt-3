@@ -2,6 +2,12 @@
 	const course = await useCourse();
 	const route = useRoute();
 
+	const chapter = computed(() => {
+		return course.meta.value.chapters.find(
+			item => item.slug === route.params.chapterSlug
+		);
+	});
+
 	const lesson = await useLesson(
 		route.params.chapterSlug,
 		route.params.lessonSlug
@@ -50,43 +56,39 @@
 	const progress = useLocalStorage('progress', []);
 
 	const isLessonCompleted = computed(() => {
-		if (!progress.value[course.chapter.value.number - 1]) {
+		if (!progress.value[chapter.value.number - 1]) {
 			return false;
 		}
 
-		if (
-			!progress.value[course.chapter.value.number - 1][lesson.value?.number - 1]
-		) {
+		if (!progress.value[chapter.value.number - 1][lesson.value?.number - 1]) {
 			return false;
 		}
 
-		return progress.value[course.chapter.value.number - 1][
-			lesson.value?.number - 1
-		];
+		return progress.value[chapter.value.number - 1][lesson.value?.number - 1];
 	});
 
 	const toggleComplete = () => {
 		if (lesson.value?.slug === '1-introduction-to-typescript-with-vue-js-3') {
 			throw createError('Could not update this lesson');
 		}
-		if (!progress.value[course.chapter.value.number - 1]) {
-			progress.value[course.chapter.value.number - 1] = [];
+		if (!progress.value[chapter.value.number - 1]) {
+			progress.value[chapter.value.number - 1] = [];
 		}
-		progress.value[course.chapter.value.number - 1][lesson.value?.number - 1] =
+		progress.value[chapter.value.number - 1][lesson.value?.number - 1] =
 			!isLessonCompleted.value;
 	};
 
 	// meta for seo
 
 	useHead({
-		title: `${course.chapter.value?.slug} - ${lesson.value?.slug}`,
+		title: `${chapter.value?.slug} - ${lesson.value?.slug}`,
 	});
 </script>
 
 <template>
 	<div>
 		<p class="mb-2 uppercase font-bold text-state-400">
-			lesson {{ course.chapter.value.number }} -
+			lesson {{ chapter.number }} -
 			{{ lesson.number }}
 		</p>
 		<h2 class="m-0 mb-1">{{ course.meta.value?.title }}</h2>
