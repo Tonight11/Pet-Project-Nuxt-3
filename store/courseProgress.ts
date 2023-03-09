@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore, acceptHMRUpdate } from 'pinia';
 
 export const useCourseProgressStore = defineStore('courseProgress', () => {
 	const progress = useLocalStorage('progress', {} as any);
@@ -24,3 +24,9 @@ export const useCourseProgressStore = defineStore('courseProgress', () => {
 
 	return { progress, toggleProgress };
 });
+
+if (import.meta.hot) {
+	import.meta.hot.accept(
+		acceptHMRUpdate(useCourseProgressStore, import.meta.hot)
+	);
+}
