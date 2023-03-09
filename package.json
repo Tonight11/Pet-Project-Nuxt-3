@@ -3,6 +3,9 @@
 	"prisma": {
 		"seed": "node prisma/seed.mjs"
 	},
+	"overrides": {
+		"vue": "latest"
+	},
 	"scripts": {
 		"build": "nuxt build",
 		"dev": "nuxt dev -o",
@@ -20,7 +23,9 @@
 		"sass-loader": "^13.2.0"
 	},
 	"dependencies": {
+		"@pinia/nuxt": "^0.4.7",
 		"@prisma/client": "^4.11.0",
+		"pinia": "^2.0.33",
 		"prisma": "^4.11.0"
 	}
 }
