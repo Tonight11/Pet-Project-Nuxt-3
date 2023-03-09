@@ -1,6 +1,8 @@
 <script setup>
+	import { useCourseProgressStore } from '~~/store/courseProgress';
 	const course = await useCourse();
 	const route = useRoute();
+	const progressStore = useCourseProgressStore();
 
 	const chapter = computed(() => {
 		return course.meta.value.chapters.find(
@@ -53,30 +55,12 @@
 
 	// marking lesson as completed
 
-	const progress = useLocalStorage('progress', []);
-
-	const isLessonCompleted = computed(() => {
-		if (!progress.value[chapter.value.number - 1]) {
-			return false;
-		}
-
-		if (!progress.value[chapter.value.number - 1][lesson.value?.number - 1]) {
-			return false;
-		}
-
-		return progress.value[chapter.value.number - 1][lesson.value?.number - 1];
-	});
-
-	const toggleComplete = () => {
-		if (lesson.value?.slug === '1-introduction-to-typescript-with-vue-js-3') {
-			throw createError('Could not update this lesson');
-		}
-		if (!progress.value[chapter.value.number - 1]) {
-			progress.value[chapter.value.number - 1] = [];
-		}
-		progress.value[chapter.value.number - 1][lesson.value?.number - 1] =
-			!isLessonCompleted.value;
-	};
+	const isLessonComp = computed(
+		() =>
+			progressStore.progress?.[route.params.chapterSlug]?.[
+				route.params.lessonSlug
+			] || 0
+	);
 
 	// meta for seo
 
@@ -101,8 +85,10 @@
 		<VideoPlayer v-if="lesson.videoId" :video-id="lesson.videoId" />
 		<p class="m-0 mb-2">{{ lesson.text }}</p>
 		<ListCompleteButton
-			:model-value="isLessonCompleted"
-			@update:model-value="toggleComplete"
+			:model-value="isLessonComp"
+			@update:model-value="
+				progressStore.toggleProgress(chapter.slug, lesson.slug)
+			"
 		/>
 	</div>
 </template>
