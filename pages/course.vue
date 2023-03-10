@@ -29,11 +29,9 @@
 							<NuxtLink
 								class="ml-3 mb-2 block"
 								:class="{
-									'lesson__link-active':
-										`/course/chapter/${chapter.slug}/lesson/${lesson.slug}` ===
-										$route.fullPath,
+									'lesson__link-active': lesson.path === $route.fullPath,
 								}"
-								:to="`/course/chapter/${chapter.slug}/lesson/${lesson.slug}`"
+								:to="lesson.path"
 								>{{ lesson.title }}</NuxtLink
 							>
 						</li>
