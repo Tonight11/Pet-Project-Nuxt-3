@@ -45,7 +45,7 @@ export type CourseNeeded = Omit<
 	chapters: ChapterNeeded[];
 };
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (): Promise<CourseNeeded> => {
 	const courseNeeded = await prisma.course.findFirst(courseSelect);
 
 	if (!courseNeeded) {
@@ -56,7 +56,7 @@ export default defineEventHandler(async () => {
 	}
 
 	const chapters = courseNeeded.chapters.map(chapter => {
-		const lesson = chapter.lessons.map(lesson => {
+		const lessons = chapter.lessons.map(lesson => {
 			return {
 				...lesson,
 				path: `/course/chapter/${chapter.slug}/lesson/${lesson.slug}`,
@@ -64,10 +64,9 @@ export default defineEventHandler(async () => {
 		});
 		return {
 			...chapter,
-			lesson,
+			lessons,
 		};
 	});
-	console.log(chapters);
 	return {
 		...courseNeeded,
 		chapters,
