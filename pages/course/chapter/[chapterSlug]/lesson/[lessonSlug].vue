@@ -3,6 +3,7 @@
 	const course = await useCourse();
 	const route = useRoute();
 	const progressStore = useCourseProgressStore();
+	const user = useSupabaseUser();
 
 	const chapter = computed(() => {
 		return course.meta.value.chapters.find(
@@ -85,6 +86,7 @@
 		<VideoPlayer v-if="lesson.videoId" :video-id="lesson.videoId" />
 		<p class="m-0 mb-2">{{ lesson.text }}</p>
 		<ListCompleteButton
+			v-if="user"
 			:model-value="isLessonComp"
 			@update:model-value="
 				progressStore.toggleProgress(chapter.slug, lesson.slug)
