@@ -1,36 +1,33 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 
 export const useCourseProgressStore = defineStore('courseProgress', () => {
-	const progress = useLocalStorage('progress', {} as any);
+	const progress = useLocalStorage<any>('progress', {});
 
 	const toggleProgress = async (chapter: string, lesson: string) => {
 		const user = useSupabaseUser();
-		const {
-			params: { chapterSlug, lessonSlug },
-		} = useRoute();
 		if (!user.value) return;
 
 		if (!chapter || !lesson) {
+			const {
+				params: { chapterSlug, lessonSlug },
+			} = useRoute();
 			chapter = chapterSlug as string;
 			lesson = lessonSlug as string;
 		}
 
 		const currentProgress = progress.value[chapter]?.[lesson];
 
+		progress.value[chapter] = {
+			...progress.value[chapter],
+			[lesson]: !currentProgress,
+		};
 		try {
-			progress.value[chapter] = {
-				...progress.value[chapter],
-				[lesson]: !currentProgress,
-			};
-			await $fetch(
-				`/api/course/chapter/${chapterSlug}/lesson/${lessonSlug}/progress`,
-				{
-					method: 'POST',
-					body: {
-						completed: !currentProgress,
-					},
-				}
-			);
+			await $fetch(`/api/course/chapter/${chapter}/lesson/${lesson}/progress`, {
+				method: 'POST',
+				body: {
+					completed: !currentProgress,
+				},
+			});
 		} catch (error) {
 			console.error(error);
 			progress.value[chapter] = {
