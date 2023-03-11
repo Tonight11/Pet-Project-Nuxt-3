@@ -35,7 +35,7 @@ export default defineEventHandler(async event => {
 	const { completed } = await readBody(event);
 	const email = user.email as string;
 
-	prisma.progressLesson.upsert({
+	return prisma.progressLesson.upsert({
 		where: {
 			lessonId_userEmail: {
 				userEmail: email,
