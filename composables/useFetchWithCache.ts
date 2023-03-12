@@ -7,7 +7,7 @@ export default async <T>(url: string) => {
 
 	if (!cached.value) {
 		const { data, error } = await useFetch<T>(url, {
-			headers: useRequestHeaders(['cookie']),
+			headers: useRequestHeaders(['cookie']) as Record<string, string>,
 		});
 
 		if (error.value) {

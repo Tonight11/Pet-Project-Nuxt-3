@@ -8,8 +8,8 @@ export const useCourseProgressStore = defineStore('courseProgress', () => {
 		if (initialized.value) return;
 		initialized.value = true;
 
-		const { data: userProgress } = await useFetch('/api/user/progress', {
-			headers: useRequestHeaders(['cookie']),
+		const { data: userProgress } = await useFetch('', {
+			headers: useRequestHeaders(['cookie']) as Record<string, string>,
 		});
 
 		if (userProgress.value) {
