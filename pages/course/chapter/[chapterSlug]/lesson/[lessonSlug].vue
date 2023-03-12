@@ -5,6 +5,8 @@
 	const progressStore = useCourseProgressStore();
 	const user = useSupabaseUser();
 
+	progressStore.initialize();
+
 	const chapter = computed(() => {
 		return course.meta.value.chapters.find(
 			item => item.slug === route.params.chapterSlug

@@ -2,6 +2,20 @@ import { defineStore, acceptHMRUpdate } from 'pinia';
 
 export const useCourseProgressStore = defineStore('courseProgress', () => {
 	const progress = useLocalStorage<any>('progress', {});
+	const initialized = ref(false);
+
+	async function initialize() {
+		if (initialized.value) return;
+		initialized.value = true;
+
+		const { data: userProgress } = await useFetch('/api/user/progress', {
+			headers: useRequestHeaders(['cookie']),
+		});
+
+		if (userProgress.value) {
+			progress.value = userProgress.value;
+		}
+	}
 
 	const toggleProgress = async (chapter: string, lesson: string) => {
 		const user = useSupabaseUser();
@@ -37,7 +51,7 @@ export const useCourseProgressStore = defineStore('courseProgress', () => {
 		}
 	};
 
-	return { progress, toggleProgress };
+	return { progress, toggleProgress, initialized, initialize };
 });
 
 if (import.meta.hot) {
