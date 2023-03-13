@@ -1,16 +1,24 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
+import { CourseProgress } from '~~/types/course';
+
+interface ChapterPercent {
+	[key: string]: number | string;
+}
 
 export const useCourseProgressStore = defineStore('courseProgress', () => {
-	const progress = useLocalStorage<any>('progress', {});
+	const progress = ref<CourseProgress>({});
 	const initialized = ref(false);
 
 	async function initialize() {
 		if (initialized.value) return;
 		initialized.value = true;
 
-		const { data: userProgress } = await useFetch('', {
-			headers: useRequestHeaders(['cookie']) as Record<string, string>,
-		});
+		const { data: userProgress } = await useFetch<CourseProgress>(
+			'/api/user/progress',
+			{
+				headers: useRequestHeaders(['cookie']) as Record<string, string>,
+			}
+		);
 
 		if (userProgress.value) {
 			progress.value = userProgress.value;
@@ -51,7 +59,44 @@ export const useCourseProgressStore = defineStore('courseProgress', () => {
 		}
 	};
 
-	return { progress, toggleProgress, initialized, initialize };
+	const percentProgress = computed(() => {
+		const chapters = ref<ChapterPercent>({});
+		Object.keys(progress.value).map(chapter => {
+			const lessons = Object.values(progress.value[chapter]);
+			const lessonCompleted = lessons.filter(lesson => lesson);
+
+			chapters.value = {
+				...chapters.value,
+				[chapter]: Number(
+					(lessonCompleted.length / lessons.length) * 100
+				).toFixed(0),
+			};
+		});
+
+		const totalLessons = Object.values(progress.value).reduce(
+			(total, chapter) => {
+				return total + Object.values(chapter).length;
+			},
+			0
+		);
+		const totalLessonsCompleted = Object.values(progress.value).reduce(
+			(total, chapter) => {
+				return total + Object.values(chapter).filter(lesson => lesson).length;
+			},
+			0
+		);
+
+		const course = Number((totalLessonsCompleted / totalLessons) * 100).toFixed(
+			0
+		);
+
+		return {
+			chapters,
+			course,
+		};
+	});
+
+	return { progress, toggleProgress, initialize, percentProgress };
 });
 
 if (import.meta.hot) {

@@ -1,14 +1,20 @@
 <script setup>
+	import { storeToRefs } from 'pinia';
+	import { useCourseProgressStore } from '~~/store/courseProgress';
+	const user = useSupabaseUser();
 	const course = await useCourse();
-	definePageMeta({
-		middleware: ['auth'],
-	});
+	const { initialize } = useCourseProgressStore();
+	const { percentProgress } = storeToRefs(useCourseProgressStore());
+	initialize();
 
 	const resetErr = async error => {
 		await navigateTo('/course');
 		error.value = null;
 	};
 
+	definePageMeta({
+		middleware: ['auth'],
+	});
 	useHead({
 		title: `Pet Nuxt 3`,
 	});
@@ -22,8 +28,20 @@
 				class="prose mr-4 p-8 bg-white rounded-md min-w-[20ch] max-w-[30ch] flex flex-col"
 			>
 				<h3 class="mb-2">Chapters</h3>
+				<div class="percent" v-if="percentProgress && user">
+					<div
+						class="percent__item"
+						:style="{
+							transform: `scaleX(${(percentProgress.course / 100).toString()})`,
+						}"
+					></div>
+					<span>{{ percentProgress.course }}%</span>
+				</div>
 				<li v-for="chapter in course.meta.value?.chapters" :key="chapter.slug">
-					<span class="font-bold">{{ chapter.title }}</span>
+					<span class="font-bold">{{ chapter.title }} </span>
+					<span class="ml-5 text-lime-600" v-if="percentProgress && user"
+						>{{ percentProgress.chapters.value[chapter.slug] }}%</span
+					>
 					<template v-if="chapter.lessons">
 						<li v-for="lesson in chapter.lessons" :key="lesson.slug">
 							<NuxtLink
@@ -37,7 +55,6 @@
 						</li>
 					</template>
 				</li>
-				<!-- All the lessons for the course listed here -->
 			</div>
 
 			<div class="prose p-12 bg-white rounded-md w-[65ch]">
@@ -63,5 +80,28 @@
 <style lang="scss" scoped>
 	.lesson__link-active {
 		color: rgb(72, 115, 255);
+	}
+
+	.percent {
+		margin: 10px 0;
+		border: 1px solid black;
+		width: 100%;
+		text-align: center;
+		position: relative;
+		height: 25px;
+		&__item {
+			background-color: rgb(0, 158, 21);
+			width: 100%;
+			height: 100%;
+			transform-origin: left;
+			transition: all 0.3s linear;
+		}
+
+		& span {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
 	}
 </style>
