@@ -8,7 +8,7 @@
 	progressStore.initialize();
 
 	const chapter = computed(() => {
-		return course.meta.value.chapters.find(
+		return course.meta.value?.chapters.find(
 			item => item.slug === route.params.chapterSlug
 		);
 	});
@@ -24,7 +24,7 @@
 				const course = await useCourse();
 
 				const chapter = computed(() => {
-					return course.meta.value.chapters.find(
+					return course.meta.value?.chapters.find(
 						item => item.slug === params.chapterSlug
 					);
 				});

@@ -40,7 +40,7 @@
 		<!-- Get course outline from course meta data  -->
 		<ul class="text-2xl font-medium space-y-16">
 			<li
-				v-for="(chapter, index) in course.meta.value.chapters"
+				v-for="(chapter, index) in course.meta.value?.chapters"
 				:key="chapter.slug"
 				class="relative"
 			>
