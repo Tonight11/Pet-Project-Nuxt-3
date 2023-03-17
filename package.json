@@ -20,7 +20,8 @@
 		"@vueuse/nuxt": "^9.10.0",
 		"nuxt": "3.0.0",
 		"sass": "^1.57.1",
-		"sass-loader": "^13.2.0"
+		"sass-loader": "^13.2.0",
+		"vite-plugin-vsharp": "^1.4.2"
 	},
 	"dependencies": {
 		"@pinia/nuxt": "^0.4.7",
