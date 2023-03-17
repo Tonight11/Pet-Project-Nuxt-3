@@ -67,7 +67,13 @@
 	<Payment v-if="showPayment" @close="showPayment = false" />
 </template>
 
-<script setup lang="ts">
+<script setup>
+	import img1 from '~/assets/images/screen1.png';
+	import img2 from '~/assets/images/screen2.png';
+	import img3 from '~/assets/images/screen3.png';
+	import img4 from '~/assets/images/screen4.png';
+	import img5 from '~/assets/images/screen5.png';
+	import img6 from '~/assets/images/screen6.png';
 	const course = await useCourse();
 	const learningOutcomes = [
 		'Hands-On Experience with the Benefits of TypeScript',
@@ -76,14 +82,7 @@
 		'How to use TypeScript with the Options API',
 		'How to type reactive data, refs, props, custom events, event handlers, DOM elements, template refs, data from provide/inject, and more',
 	];
-	const screenshots = [
-		'/images/screen1.png',
-		'/images/screen2.png',
-		'/images/screen3.png',
-		'/images/screen4.png',
-		'/images/screen5.png',
-		'/images/screen6.png',
-	];
+	const screenshots = [img1, img2, img3, img4, img5, img6];
 	definePageMeta({
 		layout: false,
 	});
