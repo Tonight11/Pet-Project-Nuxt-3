@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	interface Type {
-		color: string;
+		color?: string;
 	}
 	withDefaults(defineProps<Type>(), {
 		color: 'bg-blue-600',

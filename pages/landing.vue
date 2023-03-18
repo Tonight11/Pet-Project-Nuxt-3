@@ -64,7 +64,7 @@
 			</li>
 		</ul>
 	</UISection>
-	<Payment v-if="showPayment" @close="showPayment = false" />
+	<LazyPayment v-if="showPayment" @close="showPayment = false" />
 </template>
 
 <script setup>
