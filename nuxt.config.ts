@@ -7,6 +7,12 @@ export default defineNuxtConfig({
 			routes: ['/landing'],
 		},
 	},
+	runtimeConfig: {
+		secretKey: '',
+		public: {
+			stripeKey: '',
+		},
+	},
 	vite: {
 		plugins: [vsharp()],
 	},

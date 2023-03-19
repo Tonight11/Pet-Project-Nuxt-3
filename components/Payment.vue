@@ -18,6 +18,7 @@
 						/>
 					</div>
 				</div>
+				<div class="stripe-card"></div>
 
 				<button
 					class="font-sans mt-4 w-full text-lg text-black h-12 px-16 rounded focus:outline-none focus:shadow-outline font-bold flex items-center justify-center transition bg-yellow-300 hover:bg-yellow-200 cursor-pointer"
@@ -30,7 +31,39 @@
 </template>
 
 <script setup lang="ts">
+	import { loadStripe } from '@stripe/stripe-js';
 	const course = await useCourse();
-
 	const email = ref('');
+	const config = useRuntimeConfig();
+	const stripe = ref();
+	const stripeCard = ref();
+
+	const elements = computed(() => stripe.value?.elements());
+
+	const formStyle = {
+		base: {
+			fontSize: '16px',
+			color: '#3d4852',
+			'::placeholder': {
+				color: '#8795a1',
+			},
+		},
+	};
+	onMounted(async () => {
+		stripe.value = await loadStripe(config.public.stripeKey);
+
+		if (!stripeCard.value && elements.value) {
+			stripeCard.value = elements.value.create('card', {
+				style: formStyle,
+			});
+			stripeCard.value.mount('.stripe-card');
+		}
+	});
 </script>
+
+<style>
+	.stripe-card {
+		background: white;
+		padding: 20px;
+	}
+</style>
