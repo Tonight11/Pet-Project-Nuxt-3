@@ -1,7 +1,19 @@
 <template>
 	<UIModal @close="$emit('close')">
 		<div class="bg-slate-200 p-8 rounded-xl w-full max-w-2xl">
-			<form>
+			<div
+				v-if="success"
+				class="flex flex-col justify-center items-center space-y-6"
+			>
+				<h2 class="text-xl font-bold">Thanks for buying the course!</h2>
+				<button
+					@click=""
+					class="mt-4 w-full text-md text-black h-12 px-16 rounded focus:outline-none focus:shadow-outline flex items-center justify-center transition bg-blue-300 hover:bg-blue-200"
+				>
+					Login with Github to access
+				</button>
+			</div>
+			<form v-else @submit.prevent="handleSubmit">
 				<h2 class="font-bold text-xl text-center">
 					Buying {{ course.meta.value.title }}
 				</h2>
@@ -22,8 +34,17 @@
 
 				<button
 					class="font-sans mt-4 w-full text-lg text-black h-12 px-16 rounded focus:outline-none focus:shadow-outline font-bold flex items-center justify-center transition bg-yellow-300 hover:bg-yellow-200 cursor-pointer"
+					:class="{
+						'bg-gray-300 cursor-not-allowed': payProcess || email === '',
+						'bg-yellow-300 hover:bg-yellow-200 cursor-pointer':
+							!payProcess || email,
+
+						'bg-red-600': error,
+					}"
+					:disabled="payProcess || email === ''"
 				>
-					<div>Pay $97</div>
+					<UILoading v-if="payProcess" class="h-5 w-5" />
+					<div v-else>Pay $97</div>
 				</button>
 			</form>
 		</div>
@@ -37,9 +58,11 @@
 	const config = useRuntimeConfig();
 	const stripe = ref();
 	const stripeCard = ref();
+	const payProcess = ref(false);
+	const success = ref(false);
+	const error = ref(false);
 
 	const elements = computed(() => stripe.value?.elements());
-
 	const formStyle = {
 		base: {
 			fontSize: '16px',
@@ -59,6 +82,45 @@
 			stripeCard.value.mount('.stripe-card');
 		}
 	});
+
+	const handleSubmit = async () => {
+		if (!email.value) {
+			return;
+		}
+		let secret;
+		payProcess.value = true;
+
+		try {
+			const response = await $fetch('/api/stripe/pay1ment', {
+				method: 'POST',
+				body: { email: email.value },
+			});
+			secret = response;
+		} catch (err) {
+			error.value = true;
+			console.log(err);
+		}
+
+		try {
+			const response = await stripe.value.confirmCardPayment(secret, {
+				payment_method: {
+					card: stripeCard.value,
+				},
+				receipt_email: email.value,
+			});
+
+			console.log(response);
+
+			if (response.paymentIntent.status === 'succeeded') {
+				success.value = true;
+			}
+		} catch (err) {
+			error.value = true;
+			console.log(err);
+		} finally {
+			payProcess.value = false;
+		}
+	};
 </script>
 
 <style>
