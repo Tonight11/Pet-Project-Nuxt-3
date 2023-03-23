@@ -64,5 +64,5 @@ model CoursePayment {
   courseId  Int
   verifed   Boolean  @default(false)
   email     String
-  paymentId Int      @unique
+  paymentId String   @unique
 }
