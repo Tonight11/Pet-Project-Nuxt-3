@@ -91,7 +91,7 @@
 		payProcess.value = true;
 
 		try {
-			const response = await $fetch('/api/stripe/pay1ment', {
+			const response = await $fetch('/api/stripe/payment', {
 				method: 'POST',
 				body: { email: email.value },
 			});
@@ -108,8 +108,6 @@
 				},
 				receipt_email: email.value,
 			});
-
-			console.log(response);
 
 			if (response.paymentIntent.status === 'succeeded') {
 				success.value = true;
