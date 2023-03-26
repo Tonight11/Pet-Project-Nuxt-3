@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 	},
 	runtimeConfig: {
 		secretKey: '',
+		stripeWebhookSecret: '', 
 		public: {
 			stripeKey: '',
 		},
