@@ -13,10 +13,10 @@
 			}
 		});
 	});
-
+	console.log(`${location}${query.redirectTo}`);
 	const login = async (provider: 'github') => {
 		const redirectTo: string = `${location}${query.redirectTo}`;
-		console.log(redirectTo);
+
 		const { error } = await supabase.auth.signInWithOAuth({
 			provider,
 			options: { redirectTo },
