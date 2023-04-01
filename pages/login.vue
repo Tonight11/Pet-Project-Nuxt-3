@@ -13,17 +13,17 @@
 			}
 		});
 	});
-	const login = async (provider: 'github') => {
-		const redirectTo: string = `${location}${query.redirectTo}`;
+	const siteUrlLocation: string = `${location}${query.redirectTo}`;
+	// const login = async (provider: 'github') => {
 
-		const { error } = await auth.signInWithOAuth({
-			provider,
-			options: { redirectTo },
-		});
-		if (error) {
-			console.error(error);
-		}
-	};
+	// 	const { error } = await auth.signInWithOAuth({
+	// 		provider,
+	// 		options: { redirectTo },
+	// 	});
+	// 	if (error) {
+	// 		console.error(error);
+	// 	}
+	// };
 
 	definePageMeta({
 		layout: false,
@@ -37,7 +37,15 @@
 			<div class="signup-connect">
 				<h1>Sign in to {{ course.meta.value?.title }}</h1>
 				<div class="signup-connect__btns">
-					<button class="btn btn-social btn-facebook" @click="login('github')">
+					<button
+						class="btn btn-social btn-facebook"
+						@click="
+							auth.signInWithOAuth({
+								provider: 'github',
+								options: { redirectTo: siteUrlLocation },
+							})
+						"
+					>
 						Sign in with GitHub
 					</button>
 					<button class="btn btn-social btn-google">
