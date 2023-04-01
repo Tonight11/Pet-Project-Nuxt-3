@@ -4,7 +4,6 @@
 	const supabase = useSupabaseClient();
 	const user = useSupabaseUser();
 	const location = useRuntimeConfig();
-	console.log(location);
 	onMounted(() => {
 		watchEffect(async () => {
 			if (user.value) {
@@ -17,6 +16,7 @@
 
 	const login = async (provider: 'github') => {
 		const redirectTo: string = `${location}${query.redirectTo}`;
+		console.log(redirectTo);
 		const { error } = await supabase.auth.signInWithOAuth({
 			provider,
 			options: { redirectTo },

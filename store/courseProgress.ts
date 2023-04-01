@@ -1,4 +1,4 @@
-import { defineStore, acceptHMRUpdate } from 'pinia';
+import { defineStore } from 'pinia';
 import { CourseProgress } from '~~/types/course';
 
 interface ChapterPercent {
@@ -98,9 +98,3 @@ export const useCourseProgressStore = defineStore('courseProgress', () => {
 
 	return { progress, toggleProgress, initialize, percentProgress };
 });
-
-if (import.meta.hot) {
-	import.meta.hot.accept(
-		acceptHMRUpdate(useCourseProgressStore, import.meta.hot)
-	);
-}
