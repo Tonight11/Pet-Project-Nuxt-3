@@ -1,23 +1,22 @@
 <script setup lang="ts">
 	const course = await useCourse();
 	const { query } = useRoute();
-	const supabase = useSupabaseClient();
+	const { auth } = useSupabaseAuthClient();
 	const user = useSupabaseUser();
 	const location = useRuntimeConfig().public.siteUrl;
 	onMounted(() => {
 		watchEffect(async () => {
 			if (user.value) {
-				await navigateTo(query.redirectTo as string, {
+				navigateTo(query.redirectTo as string, {
 					replace: true,
 				});
 			}
 		});
 	});
-	console.log(`${location}${query.redirectTo}`);
 	const login = async (provider: 'github') => {
 		const redirectTo: string = `${location}${query.redirectTo}`;
 
-		const { error } = await supabase.auth.signInWithOAuth({
+		const { error } = await auth.signInWithOAuth({
 			provider,
 			options: { redirectTo },
 		});
