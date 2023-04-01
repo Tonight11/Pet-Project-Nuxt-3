@@ -3,7 +3,7 @@
 	const { query } = useRoute();
 	const supabase = useSupabaseClient();
 	const user = useSupabaseUser();
-	const location = useRuntimeConfig();
+	const location = useRuntimeConfig().public.siteUrl;
 	onMounted(() => {
 		watchEffect(async () => {
 			if (user.value) {
