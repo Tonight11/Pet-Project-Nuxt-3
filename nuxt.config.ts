@@ -12,7 +12,6 @@ export default defineNuxtConfig({
 		stripeWebhookSecret: '',
 		public: {
 			stripeKey: '',
-			siteUrl: '',
 		},
 	},
 	vite: {
