@@ -4,7 +4,6 @@
 	const supabase = useSupabaseClient();
 	const user = useSupabaseUser();
 	console.log(user.value);
-	console.log(`${window.location.origin}${query.redirectTo}`);
 	onMounted(() => {
 		watchEffect(async () => {
 			if (user.value) {
