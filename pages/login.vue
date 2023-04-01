@@ -3,7 +3,8 @@
 	const { query } = useRoute();
 	const supabase = useSupabaseClient();
 	const user = useSupabaseUser();
-	const location = useRuntimeConfig().public.siteUrl;
+	console.log(user.value);
+	console.log(`${window.location.origin}${query.redirectTo}`);
 	onMounted(() => {
 		watchEffect(async () => {
 			if (user.value) {
