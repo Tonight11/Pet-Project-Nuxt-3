@@ -1,32 +1,34 @@
 <script setup lang="ts">
+	definePageMeta({
+		layout: false,
+		middleware: ['auth'],
+	});
 	const course = await useCourse();
-	const { query } = useRoute();
 	const supabase = useSupabaseAuthClient();
 	const user = useSupabaseUser();
-	console.log(user.value);
+	const location = useRuntimeConfig().public.siteUrl;
+
 	onMounted(() => {
-		watchEffect(async () => {
+		watchEffect(() => {
 			if (user.value) {
-				navigateTo(query.redirectTo as string, {
+				navigateTo('/course', {
 					replace: true,
 				});
 			}
 		});
 	});
 	const login = async (provider: 'github') => {
-		const redirectTo: string = `${window.location.origin}${query.redirectTo}`;
+		const redirectTo: string = `${location}/login`;
 		const { error } = await supabase.auth.signInWithOAuth({
 			provider,
-			options: { redirectTo },
+			options: {
+				redirectTo,
+			},
 		});
 		if (error) {
 			console.error(error);
 		}
 	};
-
-	definePageMeta({
-		layout: false,
-	});
 </script>
 
 <template>
