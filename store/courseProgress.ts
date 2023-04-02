@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { CourseProgress } from '~~/types/course';
+const user = useSupabaseUser();
 
 interface ChapterPercent {
 	[key: string]: number | string;
@@ -10,7 +11,7 @@ export const useCourseProgressStore = defineStore('courseProgress', () => {
 	const initialized = ref(false);
 
 	async function initialize() {
-		if (initialized.value) return;
+		if (initialized.value && user.value) return;
 		initialized.value = true;
 
 		const { data: userProgress } = await useFetch<CourseProgress>(
@@ -96,5 +97,5 @@ export const useCourseProgressStore = defineStore('courseProgress', () => {
 		};
 	});
 
-	return { progress, toggleProgress, initialize, percentProgress };
+	return { progress, toggleProgress, initialize, percentProgress, initialized };
 });

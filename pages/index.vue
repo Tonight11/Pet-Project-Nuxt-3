@@ -1,7 +1,4 @@
 <script setup>
-	import { useCourseProgressStore } from '~~/store/courseProgress';
-	const { initialize } = useCourseProgressStore();
-	initialize();
 	useHead({
 		title: 'Home Page',
 		meta: [

@@ -1,6 +1,9 @@
 <script setup lang="ts">
+	import { useCourseProgressStore } from '~~/store/courseProgress';
+
 	const user = useSupabaseUser();
 	const client = useSupabaseAuthClient();
+	const courseStore = useCourseProgressStore();
 
 	const avatar = computed<string>(() => {
 		return user.value?.user_metadata.avatar_url;
@@ -28,6 +31,8 @@
 		} catch (e) {
 			console.error(error);
 		}
+
+		courseStore.initialized = false;
 		await navigateTo(`/login?redirectTo=${path}`);
 	};
 </script>
