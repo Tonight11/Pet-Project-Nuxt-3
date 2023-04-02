@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	const course = await useCourse();
 	const { query } = useRoute();
-	const supabase = useSupabaseClient();
+	const supabase = useSupabaseAuthClient();
 	const user = useSupabaseUser();
 	console.log(user.value);
 	onMounted(() => {
