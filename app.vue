@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<NuxtLoadingIndicator
+			color="repeating-linear-gradient(to right,rgb(144, 170, 255) 0%,rgb(72, 115, 255) 100%)"
+		/>
 		<NuxtLayout>
 			<NuxtPage />
 		</NuxtLayout>
