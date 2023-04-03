@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { CourseProgress } from '~~/types/course';
-const user = useSupabaseUser();
 
 interface ChapterPercent {
 	[key: string]: number | string;
@@ -11,6 +10,7 @@ export const useCourseProgressStore = defineStore('courseProgress', () => {
 	const initialized = ref(false);
 
 	async function initialize() {
+		const user = useSupabaseUser();
 		if (initialized.value && user.value) return;
 		initialized.value = true;
 

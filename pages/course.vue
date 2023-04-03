@@ -1,6 +1,17 @@
 <script setup>
-	import { storeToRefs } from 'pinia';
 	import { useCourseProgressStore } from '~~/store/courseProgress';
+	import { storeToRefs } from 'pinia';
+
+	const user = useSupabaseUser();
+	const course = await useCourse();
+	const { initialize } = useCourseProgressStore();
+	const { percentProgress } = storeToRefs(useCourseProgressStore());
+	initialize();
+
+	const resetErr = async error => {
+		await navigateTo('/course');
+		error.value = null;
+	};
 
 	definePageMeta({
 		middleware: ['auth'],
@@ -8,24 +19,6 @@
 	useHead({
 		title: `Pet Nuxt 3`,
 	});
-	const user = useSupabaseUser();
-	const course = await useCourse();
-	const { initialize } = useCourseProgressStore();
-	const { percentProgress } = storeToRefs(useCourseProgressStore());
-	initialize();
-
-	onMounted(() => {
-		watchEffect(() => {
-			if (!user.value) {
-				navigateTo('/login');
-			}
-		});
-	});
-
-	const resetErr = async error => {
-		await navigateTo('/course');
-		error.value = null;
-	};
 </script>
 
 <template>
@@ -43,12 +36,20 @@
 							transform: `scaleX(${(percentProgress.course / 100).toString()})`,
 						}"
 					></div>
-					<span>{{ percentProgress.course || 0 }}%</span>
+					<span
+						>{{
+							isNaN(percentProgress.course) ? 0 : percentProgress.course
+						}}%</span
+					>
 				</div>
 				<li v-for="chapter in course.meta.value?.chapters" :key="chapter.slug">
 					<span class="font-bold">{{ chapter.title }} </span>
 					<span class="ml-5 text-lime-600" v-if="percentProgress && user"
-						>{{ percentProgress.chapters.value[chapter.slug] || 0 }}%</span
+						>{{
+							isNaN(percentProgress.chapters.value[chapter.slug])
+								? 0
+								: percentProgress.chapters.value[chapter.slug]
+						}}%</span
 					>
 					<template v-if="chapter.lessons">
 						<li v-for="lesson in chapter.lessons" :key="lesson.slug">
