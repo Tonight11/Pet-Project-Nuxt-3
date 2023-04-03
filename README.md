@@ -9,14 +9,21 @@ Working with:
 * vueUse
 * NuxtLink
 * clientOnly
-* store
+* store&pinia
 * error page
 * route middleware
 * login&oAuth&supabase
+* prisma
+* server
 
-# web-site link
+# Frontend
+* Nuxt3 https://nuxt.com/docs
+# Backend
+* Supabase https://app.supabase.com
+* Prisma https://www.prisma.io
+# Payment
+* Stripe https://dashboard.stripe.com
 
-https://nuxt-ts.netlify.app
 
 # Nuxt 3 Minimal Starter
 
