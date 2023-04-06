@@ -1,8 +1,9 @@
 <script setup lang="ts">
 	const course = await useCourse();
 	const { query } = useRoute();
-	const supabase = useSupabaseClient();
+	const supabase = useSupabaseAuthClient();
 	const user = useSupabaseUser();
+	const location = useRuntimeConfig().public.siteUrl;
 	onMounted(() => {
 		watchEffect(async () => {
 			if (user.value) {
@@ -13,7 +14,7 @@
 		});
 	});
 	const login = async (provider: 'github') => {
-		const redirectTo: string = `${window.location.origin}${query.redirectTo}`;
+		const redirectTo: string = `${location}${query.redirectTo}`;
 		const { error } = await supabase.auth.signInWithOAuth({
 			provider,
 			options: { redirectTo },
